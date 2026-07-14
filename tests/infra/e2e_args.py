@@ -189,6 +189,21 @@ def cli_args(
         default="CN=CCF Node",
     )
     parser.add_argument(
+        "--tls-group",
+        dest="tls_groups",
+        help="OpenSSL TLS group to offer, in preference order. May be repeated",
+        action="append",
+        default=None,
+    )
+    parser.add_argument(
+        "--expected-tls-group",
+        help="TLS group passed to the independent OpenSSL client",
+    )
+    parser.add_argument(
+        "--expected-negotiated-tls-group",
+        help="Canonical group name expected in CCF's handshake log",
+    )
+    parser.add_argument(
         "--subject-alt-names",
         help="Subject Alternative Name in node certificate. Can be either iPAddress:xxx.xxx.xxx.xxx, or dNSName:sub.domain.tld",
         action="append",

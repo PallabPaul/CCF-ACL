@@ -1229,6 +1229,19 @@ if(BUILD_TESTS)
       ${CMAKE_SOURCE_DIR}/samples/constitutions/virtual/virtual_attestation_actions.js
   )
 
+  add_e2e_test(
+    NAME tls_groups_test
+    PYTHON_SCRIPT ${CMAKE_SOURCE_DIR}/tests/tls_groups.py
+    BUCKET bucket_c
+    ADDITIONAL_ARGS
+      --tls-group
+      P-256
+      --expected-tls-group
+      P-256
+      --expected-negotiated-tls-group
+      secp256r1
+  )
+
   if(CLIENT_PROTOCOLS_TEST)
     add_custom_command(
       OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/testssl/testssl.sh

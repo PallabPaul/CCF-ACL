@@ -8,4 +8,6 @@ src/crypto/test/cbor_fuzz_corpus/* binary
 *.h linguist-language=C++
 *.cpp linguist-language=C++
 
+tests/tls_groups.py text eol=lf
+
 .*canary merge=keeplocal

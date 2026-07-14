@@ -198,6 +198,7 @@ class Network:
         "worker_threads",
         "ledger_chunk_bytes",
         "subject_alt_names",
+        "tls_groups",
         "snapshot_tx_interval",
         "snapshot_min_tx_interval",
         "snapshot_time_interval",
