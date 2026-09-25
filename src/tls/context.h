@@ -85,6 +85,7 @@ namespace ccf::tls
   class Context
   {
   protected:
+    const bool is_client;
     ccf::crypto::OpenSSL::Unique_SSL_CTX cfg;
     ccf::crypto::OpenSSL::Unique_SSL ssl;
 
@@ -92,6 +93,7 @@ namespace ccf::tls
     Context(
       bool client,
       const std::vector<std::string>& groups = {"P-521", "P-384", "P-256"}) :
+      is_client(client),
       cfg(client ? TLS_client_method() : TLS_server_method()),
       ssl(cfg)
     {
@@ -202,10 +204,15 @@ namespace ccf::tls
       // Success in OpenSSL is 1, MBed is 0
       if (rc > 0)
       {
-        const auto group = get_negotiated_group();
-        LOG_DEBUG_FMT(
-          "Context::handshake() : Success, negotiated TLS group {}",
-          group.value_or("<unknown>"));
+        if (!is_client)
+        {
+          const auto group = get_negotiated_group();
+          LOG_INFO_FMT(
+            "TLS handshake completed: negotiated_group={}, "
+            "hybrid_key_exchange={}",
+            group.value_or("unknown"),
+            group.has_value() && group->find("MLKEM") != std::string::npos);
+        }
         return 0;
       }
 
